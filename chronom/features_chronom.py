@@ -9,9 +9,9 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                 chronom = (
                         chronom.drop(columns="Unnamed: 0")
                                 .assign(VR_KON=pd.to_datetime(chronom.VR_KON),
-                                        VR_NACH=pd.to_datetime(chronom.VR_NACH),
+                                        VR_NACH=pd.to_datetime(chronom.VR_NACH))
 
-                                        VR_KON=lambda x: x.VR_KON.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
+                                .assign(VR_KON=lambda x: x.VR_KON.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
                                         VR_NACH=lambda x: x.VR_NACH.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
 
                                         duration=lambda x: (x.VR_KON - x.VR_NACH).dt.total_seconds(),
