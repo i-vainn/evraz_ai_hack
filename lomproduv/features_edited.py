@@ -1,7 +1,10 @@
 import pandas as pd
+from tqdm.auto import tqdm
 import numpy as np
+import umap.umap_ as umap
 
-def cut_produv(produv_train, produv_test, chromom_train, chronom_test):
+
+def cut_produv(produv_train, produv_test, chronom_train, chronom_test):
 
     produv_train["SEC"] = pd.to_datetime(produv_train["SEC"])
     produv_test["SEC"] = pd.to_datetime(produv_test["SEC"])
