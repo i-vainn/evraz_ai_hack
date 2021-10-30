@@ -32,7 +32,12 @@ def process_plavki(plavki_train, plavki_test, clip_duration=False, top_grades=25
     data["truncated_NMZ"] = data["plavka_NMZ"].copy()
     data.loc[~data["plavka_NMZ"].isin(good_grades), "truncated_NMZ"] = "other"
 
+    data["plavka_TIPE_GOL"] = data["plavka_TIPE_GOL"].apply(lambda s: s.strip()).map({"5 сопловая": 0,
+        "4-сопл х54": 1, "4-сопл x54": 1, "Э, 4-сопл х54": 2, "Э37, 4-сопл х54": 2, "Э32": 2, "601-5": 2})
+
     cat_features = ["truncated_NMZ", "st_diff_is_zero", "dayofweek", "plavka_TIPE_GOL", "plavka_TIPE_FUR",
                 "plavka_NAPR_ZAD"] + ["bow_" + el for el in vect.get_feature_names()]
-    num_features = ["plavka_STFUT", "plavka_ST_FURM", "plavka_ST_GOL", "dayofmonth", "hour", "duration"]
+    # num_features = ["plavka_STFUT", "plavka_ST_FURM", "plavka_ST_GOL", "dayofmonth", "hour", "duration"]
+    num_features = ["dayofmonth", "hour", "duration"]
+
     return data, num_features, cat_features
