@@ -7,22 +7,20 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                 plavki = eval(f"plavki_{i}")
 
                 chronom = (
-                        chronom_train
-                        .drop(columns="Unnamed: 0")
-                        .assign(VR_KON=pd.to_datetime(chronom.VR_KON),
-                                VR_NACH=pd.to_datetime(chronom.VR_NACH))
+                        chronom.drop(columns="Unnamed: 0")
+                                .assign(VR_KON=pd.to_datetime(chronom.VR_KON),
+                                        VR_NACH=pd.to_datetime(chronom.VR_NACH),
 
-                        .assign(VR_KON=lambda x: x.VR_KON.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
-                                VR_NACH=lambda x: x.VR_NACH.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x))
+                                        VR_KON=lambda x: x.VR_KON.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
+                                        VR_NACH=lambda x: x.VR_NACH.apply(lambda x: x.replace(year=2021) if x.year == 2011 else x),
 
-                        .assign(duration=lambda x: (x.VR_KON - x.VR_NACH).dt.total_seconds(),
-                                O2=lambda x: x.O2.fillna(0))
+                                        duration=lambda x: (x.VR_KON - x.VR_NACH).dt.total_seconds(),
+                                        O2=lambda x: x.O2.fillna(0))
                 )
                 plavki = (
-                        plavki_train
-                .assign(plavka_VR_NACH=pd.to_datetime(plavki.plavka_VR_NACH),
-                        plavka_VR_KON=pd.to_datetime(plavki.plavka_VR_KON))
-                [["NPLV", "plavka_VR_NACH", "plavka_VR_KON"]]
+                        plavki.assign(plavka_VR_NACH=pd.to_datetime(plavki.plavka_VR_NACH),
+                                      plavka_VR_KON=pd.to_datetime(plavki.plavka_VR_KON))
+                              [["NPLV", "plavka_VR_NACH", "plavka_VR_KON"]]
                 )
                 df = (
                         chronom.merge(plavki, on="NPLV", how="inner")
@@ -50,8 +48,10 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                                 .fillna(0)          
                 )
                 df.columns = df.columns.map('_'.join).str.strip('_')
+
                 if i=="train":
                         train = df
                 else:
                         test = df
+                        
         return train, test, list(train.columns), []
