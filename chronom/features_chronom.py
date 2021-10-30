@@ -7,7 +7,7 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                 plavki = eval(f"plavki_{i}")
 
                 chronom = (
-                        pd.read_csv("data/chronom_train.csv")
+                        chronom_train
                         .drop(columns="Unnamed: 0")
                         .assign(VR_KON=pd.to_datetime(chronom.VR_KON),
                                 VR_NACH=pd.to_datetime(chronom.VR_NACH))
@@ -19,7 +19,7 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                                 O2=lambda x: x.O2.fillna(0))
                 )
                 plavki = (
-                        pd.read_csv("data/plavki_train.csv")
+                        plavki_train
                 .assign(plavka_VR_NACH=pd.to_datetime(plavki.plavka_VR_NACH),
                         plavka_VR_KON=pd.to_datetime(plavki.plavka_VR_KON))
                 [["NPLV", "plavka_VR_NACH", "plavka_VR_KON"]]
