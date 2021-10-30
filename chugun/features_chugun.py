@@ -31,7 +31,6 @@ def process_data(chugun_train, chugun_test, drop_outliers=False):
     ok_cols = [
         'VES', 'T', 'SI', 'MN', 'S', 'P', 'CR', 'NI', 'CU', 'V', 'TI',
         *[col.lower() + '_portion' for col in elements],
-        'total_seconds'
     ]
     num_cols = ok_cols
     cat_cols = []
