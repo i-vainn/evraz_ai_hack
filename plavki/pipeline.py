@@ -55,8 +55,8 @@ def train_w2v(chronom_train, chronom_test, vector_size=10):
     train_mean = pd.DataFrame.from_dict(dict(zip(train_mean.index, train_mean.values))).T
     test_mean = pd.DataFrame.from_dict(dict(zip(test_mean.index, test_mean.values))).T
 
-    train_mean.columns = ["w2v_" + str(i) for i in range(vector_size)]
-    test_mean.columns = ["w2v_" + str(i) for i in range(vector_size)]
+    train_mean.columns = ["w2v_" + str(i) for i in range(2 * vector_size + 1)]
+    test_mean.columns = ["w2v_" + str(i) for i in range(2 * vector_size + 1)]
 
     train_mean = train_mean.reset_index().rename(columns={"index": "NPLV"}).set_index("NPLV")
     test_mean = test_mean.reset_index().rename(columns={"index": "NPLV"}).set_index("NPLV")
@@ -86,8 +86,8 @@ def train_w2v_sip(sip_train, sip_test, vector_size=10):
     train_mean = pd.DataFrame.from_dict(dict(zip(train_mean.index, train_mean.values))).T
     test_mean = pd.DataFrame.from_dict(dict(zip(test_mean.index, test_mean.values))).T
 
-    train_mean.columns = ["w2v_" + str(i) for i in range(2 * vector_size + 1)]
-    test_mean.columns = ["w2v_" + str(i) for i in range(2 * vector_size + 1)]
+    train_mean.columns = ["w2v_sip_" + str(i) for i in range(2 * vector_size + 1)]
+    test_mean.columns = ["w2v_sip_" + str(i) for i in range(2 * vector_size + 1)]
 
     train_mean = train_mean.reset_index().rename(columns={"index": "NPLV"}).set_index("NPLV")
     test_mean = test_mean.reset_index().rename(columns={"index": "NPLV"}).set_index("NPLV")
