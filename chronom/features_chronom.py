@@ -36,10 +36,10 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                         .groupby(["NPLV", "TYPE_OPER", "prep"], as_index=False, sort=False)
                         
                         .agg(O2=("O2", "sum"), 
-                                        total_duration=("duration", "sum"),
-                                        min_duration=("duration", "min"),
-                                        max_duration=("duration", "max"),
-                                        total_operations=("NOP", "count"))
+                             total_duration=("duration", "sum"),
+                             min_duration=("duration", "min"),
+                             max_duration=("duration", "max"),           
+                             total_operations=("NOP", "count"))
                         .assign(TYPE_OPER=lambda x: x.TYPE_OPER + "_" + x.prep.astype("str"))
                         .drop(columns="prep")
                         .pivot(index="NPLV", 
@@ -53,5 +53,5 @@ def chron_features(chronom_train, chronom_test, plavki_train, plavki_test):
                         train = df
                 else:
                         test = df
-                        
+
         return train, test, list(train.columns), []
