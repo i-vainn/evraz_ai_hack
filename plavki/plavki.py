@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 
 from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.preprocessing import OrdinalEncoder
 
 
 def process_plavki(plavki_train, plavki_test, clip_duration=False, top_grades=25, bow_count=50):
@@ -34,6 +35,11 @@ def process_plavki(plavki_train, plavki_test, clip_duration=False, top_grades=25
 
     data["plavka_TIPE_GOL"] = data["plavka_TIPE_GOL"].apply(lambda s: s.strip()).map({"5 сопловая": 0,
         "4-сопл х54": 1, "4-сопл x54": 1, "Э, 4-сопл х54": 2, "Э37, 4-сопл х54": 2, "Э32": 2, "601-5": 2})
+
+    data[['plavka_TIPE_FUR', 'truncated_NMZ', 'plavka_NAPR_ZAD']] = OrdinalEncoder().fit_transform(
+        data[['plavka_TIPE_FUR', 'truncated_NMZ', 'plavka_NAPR_ZAD']])
+
+    data["plavka_st_diff"] = data["plavka_ST_GOL"] - data["plavka_ST_FURM"]
 
     cat_features = ["truncated_NMZ", "st_diff_is_zero", "dayofweek", "plavka_TIPE_GOL", "plavka_TIPE_FUR",
                 "plavka_NAPR_ZAD"] + ["bow_" + el for el in vect.get_feature_names()]
