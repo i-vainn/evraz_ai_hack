@@ -29,7 +29,7 @@ def process_data(chugun_train, chugun_test, drop_outliers=False):
     data['total_seconds'] = (data.DATA_ZAMERA - datetime(1970, 1, 1)).dt.total_seconds()
 
     ok_cols = [
-        'VES', 'T', 'SI', 'MN', 'S', 'P', 'CR', 'NI', 'CU', 'V', 'TI', 'total_seconds',
+        'VES', 'T', 'SI', 'MN', 'S', 'P', 'CR', 'NI', 'CU', 'V', 'TI',
         *[col.lower() + '_portion' for col in elements],
     ]
     num_cols = ok_cols
