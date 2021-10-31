@@ -4,5 +4,5 @@
 
 1. Сохранить все данные в папку `data`.
 2. Запустить ноутбук `plavki/final_hope.ipynb`.
-2. Запустить ноутбуки <вставить сюда>
+2. Запустить ноутбуки `gas/gas_autofeatures.ipynb` и `gas/gas_plus_chronom.ipynb`.
 3. Запустить ноутбук `plavki/for_reproducing.ipynb`.
